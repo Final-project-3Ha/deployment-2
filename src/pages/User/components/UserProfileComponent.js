@@ -1,7 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
+import { useState, useEffect } from "react";
 
-function UserProfileComponent({ updateUserApiRequest }) {
+function UserProfileComponent({
+  updateUserApiRequest,
+  fetchUser,
+  userInfoFromRedux,
+  setReduxUserState,
+  reduxDispatch,
+  localStorage,
+  sessionStorage,
+}) {
   const [validated, setValidated] = useState(false);
   const [updateUserResponseState, setUpdateUserResponseState] = useState({
     success: "",
@@ -9,6 +18,14 @@ function UserProfileComponent({ updateUserApiRequest }) {
   });
 
   const [passwordsMatchState, setPasswordsMatchState] = useState();
+  const [user, setUser] = useState({});
+  const userInfo = userInfoFromRedux;
+
+  useEffect(() => {
+    fetchUser(userInfo._id)
+      .then((data) => setUser(data))
+      .catch((er) => console.log(er));
+  }, [userInfo._id]);
 
   const onChange = () => {
     const password = document.querySelector("input[name=password]");
@@ -39,9 +56,32 @@ function UserProfileComponent({ updateUserApiRequest }) {
       event.currentTarget.checkValidity() === true &&
       form.password.value === form.confirmPassword.value
     ) {
-      updateUserApiRequest(name, lastName, phoneNumber, address, city, password)
+      updateUserApiRequest(
+        name,
+        lastName,
+        phoneNumber,
+        address,
+        city,
+        password
+      )
         .then((data) => {
           setUpdateUserResponseState({ success: data.success, error: "" });
+          reduxDispatch(
+            setReduxUserState({
+              doNotLogout: userInfo.doNotLogout,
+              ...data.userUpdated,
+            })
+          );
+          if (userInfo.doNotLogout)
+            localStorage.setItem(
+              "userInfo",
+              JSON.stringify({ doNotLogout: true, ...data.userUpdated })
+            );
+          else
+            sessionStorage.setItem(
+              "userInfo",
+              JSON.stringify({ doNotLogout: false, ...data.userUpdated })
+            );
         })
         .catch((error) => {
           const errorMessage =
@@ -50,14 +90,13 @@ function UserProfileComponent({ updateUserApiRequest }) {
               : "An error occurred";
           setUpdateUserResponseState({ success: "", error: errorMessage });
         });
-        // .catch((er) =>
-        //   setUpdateUserResponseState({
-        //     error: er.response.data.message
-        //       ? er.response.data.message
-        //       : er.response.data,
-        //   })
-        // );
-        
+      // .catch((er) =>
+      //   setUpdateUserResponseState({
+      //     error: er.response.data.message
+      //       ? er.response.data.message
+      //       : er.response.data,
+      //   })
+      // );
     }
     setValidated(true);
   };
@@ -73,7 +112,7 @@ function UserProfileComponent({ updateUserApiRequest }) {
               <Form.Control
                 required
                 type="text"
-                defaultValue="Hassan"
+                defaultValue={user.name}
                 name="name"
               />
               <Form.Control.Feedback type="invalid">
@@ -85,7 +124,7 @@ function UserProfileComponent({ updateUserApiRequest }) {
               <Form.Control
                 required
                 type="text"
-                defaultValue="Hammoud"
+                defaultValue={user.lastName}
                 name="lastName"
               />
               <Form.Control.Feedback type="invalid">
@@ -95,7 +134,7 @@ function UserProfileComponent({ updateUserApiRequest }) {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control disabled value="Hssn@gmail.com" />
+              <Form.Control disabled value={user.email} />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPhone">
@@ -103,7 +142,7 @@ function UserProfileComponent({ updateUserApiRequest }) {
               <Form.Control
                 type="text"
                 placeholder="Enter your phone number"
-                defaultValue=""
+                defaultValue={user.phoneNumber}
                 name="phoneNumber"
               />
             </Form.Group>
@@ -113,7 +152,7 @@ function UserProfileComponent({ updateUserApiRequest }) {
               <Form.Control
                 type="text"
                 placeholder="Enter your address"
-                defaultValue=""
+                defaultValue={user.address}
                 name="address"
               />
             </Form.Group>
@@ -123,7 +162,7 @@ function UserProfileComponent({ updateUserApiRequest }) {
               <Form.Control
                 type="text"
                 placeholder="Enter your country"
-                defaultValue=""
+                defaultValue={user.city}
                 name="city"
               />
             </Form.Group>
