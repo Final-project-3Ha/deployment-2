@@ -48,13 +48,15 @@ function LoginPageComponent({
             window.location.href = "/";
           else window.location.href = "/admin/orders";
         })
-        .catch((er) =>
+        .catch((er) => {
+          const errorMessage =
+            er.response?.data?.message ||
+            er.response?.data ||
+            "An error occurred.";
           setLoginUserResponseState({
-            error: er.response.data.message
-              ? er.response.data.message
-              : er.response.data,
-          })
-        );
+            error: errorMessage,
+          });
+        });
     }
 
     setValidated(true);
