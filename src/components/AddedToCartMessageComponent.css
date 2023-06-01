@@ -1,0 +1,31 @@
+/* :root {
+  --primaryColor: #ffffff;
+  --secondaryColor: #458217;
+  --secondaryColorAlert: #458217d5;
+  --accentColor: #f7892d;
+  --accentColorHover: #f7882dd5;
+}
+
+ .alert-primary {
+    background-color: var(--secondaryColorAlert) !important;
+}
+
+ .alert {
+    background-color: var(--secondaryColorAlert) !important;
+}
+
+.alert-danger {
+  background-color: var(--accentColorHover) !important;
+}
+
+Stars Color
+
+.style-module_fillIcons__6---A {
+  color: var(--accentColorHover) !important;
+}
+
+
+
+.btn-close {
+  --bs-btn-close-color: var(--accentColor) !important;
+  --bs-btn-close-bg:var(--accentColor) !important; } */

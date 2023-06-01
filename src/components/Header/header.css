@@ -1,0 +1,65 @@
+:root {
+  --primaryColor: #ffffff;
+  --secondaryColor: #458217;
+  --accentColor: #f7892d;
+  --accentColorHover: #f7882dd5;
+}
+
+
+   .nav-link:hover {
+  color: var(--accentColor);
+}
+
+.navbar-toggler {
+  background-color: var(--accentColor) !important;
+}
+
+ .navbar-toggler:hover {
+  background-color: var(--accentColorHover) !important;
+}
+
+
+.nav-link:hover {
+  color: #f7892d !important;
+}
+
+
+.nav-link {
+  color: var(--secondaryColor)!important;
+}
+
+.custom-dropdown .dropdown-toggle {
+  background-color: var(--accentColor);
+  color: var(--primaryColor);
+}
+
+.custom-dropdown .dropdown-toggle:hover {
+  background-color: var(--accentColorHover);
+  /* color: <your-hover-text-color>; */
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: var(--bs-dropdown-link-active-color);
+    text-decoration: none;
+    background-color:var(--accentColor) !important;
+}
+
+.btn-primary {
+    background-color: var(--accentColor) !important;
+    border: 0 !important;
+    
+
+}
+
+.navbar-brand {
+  color: var(--secondaryColor)!important;
+
+}
+
+  .navbar-brand:hover {
+  color: var(--accentColorHover) !important;
+}
+
+/* .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+  max-width: 90vw!important;
+} */

@@ -1,0 +1,16 @@
+html {
+  position: relative !important;
+  min-height: 100%;
+}
+
+body {
+  /* margin-bottom: 170px !important; */
+  background-color: #EAF2FF;
+}
+
+footer {
+  position: relative !important;
+  width: 100% !important;
+  bottom: 0;
+}
+

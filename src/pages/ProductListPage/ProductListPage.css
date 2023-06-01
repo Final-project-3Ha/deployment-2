@@ -1,0 +1,27 @@
+:root {
+  --primaryColor: #ffffff;
+  --secondaryColor: #458217;
+  --secondaryColorHover: #458217d5;
+  --accentColor: #f7892d;
+  --accentColorHover: #f7882dd5;
+}
+
+
+ #filter {
+    background-color: var(--secondaryColor) !important;
+    border: 0;
+}
+
+#filter:hover{
+    background-color: var(--secondaryColorHover) !important;
+}
+
+#reset {
+    background-color: var(--accentColor) !important;
+    border: 0;
+}
+
+#reset:hover {
+    background-color: var(--accentColorHover)!important;
+    
+}

@@ -1,0 +1,26 @@
+:root {
+  --primaryColor: #ffffff;
+  --secondaryColor: #458217;
+  --accentColor: #f7892d;
+  --accentColorHover: #f7882dd5;
+}
+
+.btn.btn-category {
+  background-color: var(--accentColor) !important;
+  border-color: var(--primaryColor) !important;
+}
+
+
+a.btn.btn-category.btn-block.btn.btn-primary:active {
+  background-color: var(--accentColor);
+  border: 0;
+}
+
+.btn-primary:hover {
+  background-color: var(--accentColorHover) !important;
+  border: 0 !important;
+}
+
+.card {
+  --bs-card-border-color:#f3f5fa !important;
+}

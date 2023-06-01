@@ -1,0 +1,118 @@
+:root {
+  --primaryColor: #ffffff;
+  --secondaryColor: #458217;
+  --accentColor: #f7892d;
+  --accentColorHover: #f7882dd5;
+}
+
+.rounded-pill.bg-primary {
+  
+  background-color: var(--accentColor) !important;
+}
+
+.rounded-pill.text-light {
+    color: black !important;
+}
+
+
+.btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show {
+  /* color: var(--bs-btn-active-color); */
+  background-color: var(--accentColor) !important;
+  border-color: var(--accentColor) !important;
+}
+
+.chat-btn {
+    position:fixed;
+    right: 14px;
+    bottom: 30px;
+    cursor: pointer;
+    background-color: var(--accentColor);
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    color: var(--primaryColor);
+    font-size: 22px;
+    z-index: 2;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.chat-btn:hover {
+    background-color: var(--accentColorHover);
+}
+
+.chat-btn .close {
+display: none;
+}
+
+#check:checked ~ .chat-btn i {
+    display:block;
+}
+
+#check:checked ~ .chat-btn .comment{
+    display:none;
+}
+
+#check {
+    display: none !important;
+}
+
+#check:checked ~ .chat-wrapper{
+    opacity: 1;
+}
+
+.chat-wrapper {
+    opacity: 0;
+    position: fixed;
+    right: 20px;
+    bottom:100px;
+    z-index: 2;
+    width: 300px;
+    transition: all 0.4;
+    background-color: var(--primaryColor);
+    border-radius: 5px;
+}
+
+.chat-header {
+    background-color: var(--accentColor);
+    padding: 13px;
+    margin-bottom: 10px;
+    border-radius: 5px 5px 0px 0px ;
+    color: var(--primaryColor);
+
+}
+
+.chat-form {
+    padding: 15px;
+}
+
+.chat-form input, .chat-form textarea, .chat-form button {
+    margin-bottom: 10px;
+}
+
+.chat-form textarea {
+    resize: none;
+}
+
+#clientChatMsg:focus, .btn:focus {
+    box-shadow: none;
+}
+
+
+
+.btn.btn-success {
+  background-color: var(--accentColor);
+  border-color: var(--primaryColor)
+}
+
+.btn.btn-success:hover {
+  background-color: var(--accentColorHover);
+  border-color: var(--primaryColor)
+}
+
+.cht-msg {
+    max-height: 300px;
+    overflow: auto;
+}

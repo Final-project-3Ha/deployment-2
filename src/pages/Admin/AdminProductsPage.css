@@ -1,0 +1,16 @@
+:root {
+  --primaryColor: #ffffff;
+  --AdminColor: #EAE7DC
+  --secondaryColor: #458217;
+  --secondaryColorHover: #458217d5;
+  --accentColor: #f7892d;
+  --accentColorHover: #f7882dd5;
+}
+
+#btn-edit{
+    background-color: var(--secondaryColor)!important;
+}
+
+#btn-edit:hover{
+    background-color: var(--secondaryColorHover)!important;
+}
