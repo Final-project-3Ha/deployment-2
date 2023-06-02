@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import { Rating } from "react-simple-star-rating";
-import {LinkContainer }from 'react-router-bootstrap'
+// import {LinkContainer }from 'react-router-bootstrap'
 import { Link } from "react-router-dom";
 
 function ProductForListComponent({
@@ -44,11 +44,11 @@ function ProductForListComponent({
             </Card.Text>
 
             <Card.Text className="h4" style={{ marginBottom: "20px" }}>
-              <LinkContainer to={`/product-details/${productId}`}>
+              <Link to={`/product-details/${productId}`}>
                 <Button variant="primary" type="true">
                   See Product
                 </Button>
-              </LinkContainer>
+              </Link>
             </Card.Text>
           </Card.Body>
         </Col>

@@ -19,6 +19,7 @@ import { logout } from "../../redux/actions/userAction";
 const HeaderComponent = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userRegisterLogin);
+  const itemsCount = useSelector((state) => state.cart.itemsCount);
   const primaryColor = "#f3f5fa";
   // const secondaryColor = "#458217";
   const accentColor = "#E48334";
@@ -44,7 +45,7 @@ const HeaderComponent = () => {
           <Navbar.Brand href="/">
             {" "}
             <img
-              src="/images/Carousel/Monueh-Hssn.svg"
+              src="/Monueh-Hssn.svg"
               alt="Monueh Logo"
               height="100"
               width="100"
@@ -114,7 +115,7 @@ const HeaderComponent = () => {
             <LinkContainer to="/cart">
               <Nav.Link style={accentButtonStyle}>
                 <Badge pill bg="#E48334" style={accentButtonStyle}>
-                  2
+                  {itemsCount === 0 ? "" : itemsCount}
                 </Badge>
                 <i className="bi bi-cart-dash"></i>
                 <span className="ms-1">CART</span>

@@ -24,3 +24,8 @@ a.btn.btn-category.btn-block.btn.btn-primary:active {
 .card {
   --bs-card-border-color:#f3f5fa !important;
 }
+
+.category-card-image {
+  height: 415px;
+  width: 100%;
+}

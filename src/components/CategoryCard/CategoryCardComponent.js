@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 // import { LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
-import'./CategoryCard.css'
+import "./CategoryCard.css";
 function CategoryCardComponent({ category, idx }) {
   //  const primaryColor = "#ffffff";
   //  const secondaryColor = "#458217";
@@ -13,8 +13,8 @@ function CategoryCardComponent({ category, idx }) {
   //   backgroundColor: accentColor,
   // };
   const images = [
-    "/images/Carousel/pexels-2.jpg",
-    "/images/Carousel/pexels-2.jpg",
+    "/images/Carousel/moneh3.jpeg",
+    "/images/Carousel/Carousel-1.png",
     "/images/Carousel/pexels-2.jpg",
     "/images/Carousel/pexels-2.jpg",
     "/images/Carousel/pexels-2.jpg",
@@ -24,8 +24,16 @@ function CategoryCardComponent({ category, idx }) {
   ];
   return (
     // <Card style={{ background: "#EAF2FF" }}>
-    <Card style={{backgroundColor:"#f3f5fa"}}>
-      <Card.Img crossOrigin="anonymous" variant="top" src={images[idx]}  />
+    <Card style={{ backgroundColor: "#f3f5fa" }}>
+      <div className="category-card-image">
+        <Card.Img
+          crossOrigin="anonymous"
+          variant="top"
+          src={images[idx]}
+          width="100%"
+          height="100%"
+        />
+      </div>
       <Card.Body>
         <Card.Title>{category}</Card.Title>
         <Card.Text>

@@ -7,11 +7,16 @@ function CartItemComponent({ item, orderCreated = false }) {
       <ListGroup.Item>
         <Row>
           <Col md={2}>
+
+            <div className="category-card-image">
+
+
             <Image
               crossOrigin="anonymous"
               src={item.image ? item.image.path ?? null : null}
               fluid
             />
+            </div>
           </Col>
           <Col md={2}>{item.name}</Col>
           <Col md={2}>
