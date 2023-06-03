@@ -5,10 +5,13 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import { cartReducer } from "./reducers/cartReducers.js";
 import { userRegisterLoginReducer } from "./reducers/userReducers.js";
+import { getCategoriesReducer } from "./reducers/categoryReducers.js";
+
 
 const reducer = combineReducers({
   cart: cartReducer,
   userRegisterLogin: userRegisterLoginReducer,
+  getCategories: getCategoriesReducer,
 });
 
 

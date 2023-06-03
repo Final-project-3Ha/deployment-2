@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const onHover = {
   cursor: "pointer",
@@ -24,6 +25,10 @@ const onHover = {
 
 function AdminEditProductPage() {
   const [validated, setValidated] = useState(false);
+
+   const { categories } = useSelector((state) => state.getCategories);
+   console.log(categories);
+
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -44,7 +49,7 @@ function AdminEditProductPage() {
         </Col> */}
         <Col md={6}>
           <h1 className="mb-4">Edit Product</h1>
-          <Form noValidate validated={validated} on onSubmit={handleSubmit}>
+          <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicName">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -131,7 +136,7 @@ function AdminEditProductPage() {
                 </Form.Group>
               </Col>
             </Row>
-            <Row hover>
+            <Row >
               <Table>
                 <thead>
                   <tr>
@@ -141,7 +146,7 @@ function AdminEditProductPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr className="hover-row" >
                     <td>Attr key</td>
                     <td>Attr value</td>
                     <td>

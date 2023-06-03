@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 function AdminEditUserPage() {
-  const [validated, setValidated] = useState(false);
+  const [validated, setValidated] = useState("false");
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -25,7 +25,7 @@ function AdminEditUserPage() {
         </Col> */}
         <Col md={6}>
           <h1 className="mb-4">Edit User</h1>
-          <Form noValidate validated={validated} on onSubmit={handleSubmit}>
+          <Form noValidate validated={validated}  onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicFirstName">
               <Form.Label>First name</Form.Label>
               <Form.Control

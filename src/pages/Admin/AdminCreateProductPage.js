@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 function AdminCreateProductPage() {
-  const [validated, setValidated] = useState(false);
+  const [validated, setValidated] = useState("false");
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -34,7 +34,11 @@ function AdminCreateProductPage() {
         </Col> */}
         <Col md={6}>
           <h1 className="mb-4">Create a new product</h1>
-          <Form noValidate validated={validated} on onSubmit={handleSubmit}>
+          <Form
+            noValidate
+            validated={validated.toString()}
+            onSubmit={handleSubmit}
+          >
             <Form.Label>Name</Form.Label>
             <Form.Control name="name" required type="text" />
             <Form.Group

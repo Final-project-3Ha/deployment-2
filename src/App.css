@@ -115,3 +115,8 @@ a:hover {
   text-decoration: none;
   background-color: var(--bootStrapColor) !important;
 } */
+
+.hover-row:hover {
+  background-color: var(--bootStrapColor);
+  cursor: pointer;
+}

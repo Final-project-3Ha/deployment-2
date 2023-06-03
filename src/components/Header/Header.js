@@ -15,6 +15,8 @@ import "./header.css";
 import { LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
 import { logout } from "../../redux/actions/userAction";
+import { useEffect } from "react";
+import { getCategories } from "../../redux/actions/categoryActions";
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();
@@ -29,6 +31,10 @@ const HeaderComponent = () => {
   const navbarStyle = {
     backgroundColor: primaryColor,
   };
+
+   useEffect(() => {
+     dispatch(getCategories());
+   }, [dispatch]);
 
   return (
     <Navbar collapseOnSelect expand="lg" variant="dark" style={navbarStyle}>
