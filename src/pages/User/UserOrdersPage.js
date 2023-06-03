@@ -1,45 +1,15 @@
 import React from "react";
-import { Col, Row, Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import UserOrdersPageComponent from "./components/UserOrdersPageComponent";
+import axios from "axios";
+
+
+const getOrder = async (orderId) => {
+  const { data } = await axios.get("/api/orders");
+  return data;
+};
 
 function UserOrdersPage() {
-  return (
-    <Row className="m-5">
-      <Col md={12}>
-        <h1> My Orders</h1>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>User</th>
-              <th>Date</th>
-              <th>Total</th>
-              <th>Delivered</th>
-              <th>Order details</th>
-            </tr>
-          </thead>
-          <tbody>
-            {["bi bi-check-lg text-success", "bi bi-x-lg text-danger"].map((item, idx) =>(
-              
-            <tr key={idx}>
-              <td>{idx +1}</td>
-              <td>Hassan Hammoud</td>
-              <td>2023-5-25</td>
-              <td>$525</td>
-              <td>
-                <i className={item}></i>
-              </td>
-              <td>
-                <Link to="/user/order-details"> Go to order</Link>
-              </td>
-            </tr>
-            ))}
-           
-          </tbody>
-        </Table>
-      </Col>
-    </Row>
-  );
+  return <UserOrdersPageComponent getOrder={getOrder} />;
 }
 
 export default UserOrdersPage;
