@@ -21,7 +21,7 @@ function CartPageComponent({
   };
 
   return (
-    <Container>
+    <Container className="mt-5 mb-5">
       <Row className="mt-4">
         <Col md={8}>
           <h1>Shopping Cart</h1>

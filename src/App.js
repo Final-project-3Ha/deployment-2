@@ -89,7 +89,7 @@ function App() {
               element={<UserCartDetailsPage />}
             />
             <Route
-              path="/user/order-details"
+              path="/user/order-details/:id"
               element={<UserOrderDetailsPage />}
             />
           </Route>
