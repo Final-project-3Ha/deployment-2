@@ -1,5 +1,5 @@
 import React from "react";
-import ProductListPageComponent from "../components/ProductListPageComponent";
+import ProductListPageComponent from "../components/ProductListPageComponent.js";
 import axios from "axios";
 
 const getProducts = async () => {

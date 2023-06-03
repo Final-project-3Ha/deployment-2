@@ -27,87 +27,22 @@ function ProductDetailsPageComponent({ addToCartReduxAction, reduxDispatch }) {
         setShowCartMessage(true);
      };
 
-//   var options = {
-//     // width: 400,
-//     // zoomWidth: 500,
-//     // fillContainer: true,
-//     // zoomPosition: "botttom"
-//     scale: 2,
-//     offset: { vertical: 0, horizontal: 0 },
-//   };
-//   useEffect(() => {
-//     new ImageZoom(document.getElementById("first"), options);
-//     new ImageZoom(document.getElementById("second"), options);
-//     new ImageZoom(document.getElementById("third"), options);
-//     new ImageZoom(document.getElementById("fourth"), options);
-//   });
+  var options = {
+    // width: 400,
+    // zoomWidth: 500,
+    // fillContainer: true,
+    // zoomPosition: "botttom"
+    scale: 2,
+    offset: { vertical: 0, horizontal: 0 },
+  };
+  useEffect(() => {
+    new ImageZoom(document.getElementById("first"), options);
+    new ImageZoom(document.getElementById("second"), options);
+    new ImageZoom(document.getElementById("third"), options);
+    new ImageZoom(document.getElementById("fourth"), options);
+  });
 
-    // useEffect(() => {
-    // let imageZoomInstances = [];
-
-    // const createImageZoomInstance = (id) => {
-    //     const element = document.getElementById(id);
-    //     if (element) {
-    //     const options = {
-    //         scale: 2,
-    //         offset: { vertical: 0, horizontal: 0 },
-    //     };
-    //     const imageZoomInstance = new ImageZoom(element, options);
-    //     imageZoomInstances.push(imageZoomInstance);
-    //     }
-    // };
-
-    // createImageZoomInstance("first");
-    // createImageZoomInstance("second");
-    // createImageZoomInstance("third");
-    // createImageZoomInstance("fourth");
-
-    // return () => {
-    //     imageZoomInstances.forEach((instance) => instance.kill());
-    // };
-    // }, []);
-
-    useEffect(() => {
-      let imageZoomInstances = [];
-
-      const createImageZoomInstance = (id) => {
-        const element = document.getElementById(id);
-        if (element) {
-          const options = {
-            scale: 2,
-            offset: { vertical: 0, horizontal: 0 },
-          };
-          const imageZoomInstance = new ImageZoom(element, options);
-          imageZoomInstances.push(imageZoomInstance);
-        }
-      };
-
-      const destroyImageZoomInstances = () => {
-        imageZoomInstances.forEach((instance) => instance.kill());
-        imageZoomInstances = [];
-      };
-
-      const handleResize = () => {
-        destroyImageZoomInstances();
-        createImageZoomInstance("first");
-        createImageZoomInstance("second");
-        createImageZoomInstance("third");
-        createImageZoomInstance("fourth");
-      };
-
-      createImageZoomInstance("first");
-      createImageZoomInstance("second");
-      createImageZoomInstance("third");
-      createImageZoomInstance("fourth");
-
-      window.addEventListener("resize", handleResize);
-
-      return () => {
-        window.removeEventListener("resize", handleResize);
-        destroyImageZoomInstances();
-      };
-    }, []);
-
+   
 
 
 
