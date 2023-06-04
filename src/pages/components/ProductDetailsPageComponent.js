@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Col,
   Row,
@@ -21,6 +21,8 @@ function ProductDetailsPageComponent({
   addToCartReduxAction,
   reduxDispatch,
   getProductDetails,
+  userInfo,
+  writeReviewApiRequest,
 }) {
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
@@ -28,11 +30,23 @@ function ProductDetailsPageComponent({
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [productReviewed, setProductReviewed] = useState(false);
+
+const messagesEndRef = useRef(null);
 
   const addToCartHandler = () => {
     reduxDispatch(addToCartReduxAction(id, quantity));
     setShowCartMessage(true);
   };
+
+
+  useEffect (() => {
+    if (productReviewed) {
+      setTimeout (() => {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth"})
+      }, 200)
+    }
+  }, [productReviewed])
 
   useEffect(() => {
     if (product.images) {
@@ -63,7 +77,32 @@ function ProductDetailsPageComponent({
           er.response.data.message ? er.response.data.message : er.response.data
         )
       );
-  }, []);
+  }, [id, productReviewed, getProductDetails]);
+
+  const sendReviewHandler = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget.elements;
+    const formInputs = {
+      comment: form.comment.value,
+      rating: form.rating.value,
+    };
+    if (e.currentTarget.checkValidity() === true) {
+      writeReviewApiRequest(product._id, formInputs)
+        .then((data) => {
+          if (data === "review created") {
+            setProductReviewed("You successfully reviewed the page!");
+          }
+        })
+        .catch((er) =>
+          setProductReviewed(
+            er.response.data.message
+              ? er.response.data.message
+              : er.response.data
+          )
+        );
+    }
+  }
+
 
   return (
     <Container className="mt-5 mb-5">
@@ -162,40 +201,63 @@ function ProductDetailsPageComponent({
                   <ListGroup variant="flush">
                     {product.reviews &&
                       product.reviews.map((review, idx) => (
-
-                      <ListGroup.Item key={idx}>
-                        {review.user.name}<br />
-                        <Rating readonly size={20} initialValue={review.rating} /> <br />
-                        {review.createdAt.substring(0, 10)} <br />
-                        <p>
-                        {review.comment}
-                        </p>
-                      </ListGroup.Item>
+                        <ListGroup.Item key={idx}>
+                          {review.user.name}
+                          <br />
+                          <Rating
+                            readonly
+                            size={20}
+                            initialValue={review.rating}
+                          />{" "}
+                          <br />
+                          {review.createdAt.substring(0, 10)} <br />
+                          <p>{review.comment}</p>
+                        </ListGroup.Item>
                       ))}
+                      <div ref={messagesEndRef} />
                   </ListGroup>
                 </Col>
               </Row>
               <hr />
-              <Alert variant="danger">Login first to write a review</Alert>
-              <Form>
+              {!userInfo.name && (
+                <Alert variant="danger">Login first to write a review</Alert>
+              )}
+              <Form onSubmit={sendReviewHandler}>
                 <Form.Group
                   className="mb-3"
                   controlId="exampleForm.ControlInput1"
                 >
                   <Form.Label>Write a review</Form.Label>
-                  <Form.Control as="textarea" rows={3} />
+                  <Form.Control
+                    name="comment"
+                    required
+                    as="textarea"
+                    disabled={!userInfo.name}
+                    rows={3}
+                  />
                 </Form.Group>
-                <Form.Select aria-label="Default select example">
-                  <option>Your rating</option>
+                <Form.Select
+                  name="rating"
+                  required
+                  disabled={!userInfo.name}
+                  aria-label="Default select example"
+                >
+                  <option value="">Your rating</option>
                   <option value="5">Very good</option>
                   <option value="4">Good</option>
                   <option value="3">Average</option>
                   <option value="2">Bad</option>
                   <option value="1">Awful</option>
                 </Form.Select>
-                <Button className="mb-3 mt-3" variant="primary">
+                <Button
+                  disabled={!userInfo.name}
+                  type="submit"
+                  className="mb-3 mt-3"
+                  variant="primary"
+                >
                   Submit
                 </Button>
+                {productReviewed}
               </Form>
             </Col>
           </>

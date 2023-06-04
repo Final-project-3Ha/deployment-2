@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/actions/cartActions.js";
 import ProductDetailsPageComponent from "../components/ProductDetailsPageComponent.js";
 import axios from "axios";
@@ -11,10 +11,18 @@ const getProductDetails = async (id) => {
 };
 
 
+const writeReviewApiRequest = async (productId, formInputs) => {
+  const { data } = await axios.post(`/api/users/review/${productId}`, {
+    ...formInputs,
+  });
+  return data;
+};
+
 
 function ProductDetailsPage() {
-  const dispatch = useDispatch();
+ const dispatch = useDispatch();
 
+ const userInfo = useSelector((state) => state.userRegisterLogin.userInfo);
  
 
   return (
@@ -22,6 +30,8 @@ function ProductDetailsPage() {
       addToCartReduxAction={addToCart}
       reduxDispatch={dispatch}
       getProductDetails={getProductDetails}
+      userInfo={userInfo}
+      writeReviewApiRequest={writeReviewApiRequest}
     />
   );
 }
