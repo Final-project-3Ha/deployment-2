@@ -120,3 +120,13 @@ a:hover {
   background-color: var(--bootStrapColor);
   cursor: pointer;
 }
+
+.page-link.active, .active > .page-link {
+  z-index: 1 !important;
+  /* color: var(--bs-pagination-active-color); */
+  background-color: var(--bootStrapColor)!important;
+
+  border-color: var(--bootStrapColor)!important;
+
+  color: var(--accentColor) !important;
+}

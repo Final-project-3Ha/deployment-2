@@ -9,7 +9,7 @@ import RatingFilterComponent from "../../components/filterQueryResultOptions/Rat
 import CategoryFilterComponent from "../../components/filterQueryResultOptions/CategoryFilterComponent.js";
 import AttributesFilterComponent from "../../components/filterQueryResultOptions/AttributesFilterComponent.js";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 function ProductListPageComponent({ getProducts, categories }) {
   const [products, setProducts] = useState([]);
@@ -21,10 +21,17 @@ function ProductListPageComponent({ getProducts, categories }) {
 
   const [filters, setFilters] = useState({});
   const [price, setPrice] = useState(10);
-  const [ratingsFromFilter,setRatingsFromFilter] = useState({})
-      const [categoriesFromFilter, setCategoriesFromFilter] = useState({});
+  const [ratingsFromFilter, setRatingsFromFilter] = useState({});
+  const [categoriesFromFilter, setCategoriesFromFilter] = useState({});
+  const [sortOption, setSortOption] = useState("");
+  const [paginationLinksNumber, setPaginationLinksNumber] = useState(null);
+  const [pageNum, setPageNum] = useState(null);
 
   const { categoryName } = useParams() || "";
+  const { pageNumParam } = useParams() || 1;
+  const { searchQuery } = useParams() || "";
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (categoryName) {
@@ -40,7 +47,6 @@ function ProductListPageComponent({ getProducts, categories }) {
       setAttrsFilter([]);
     }
   }, [categoryName, categories]);
-
 
   useEffect(() => {
     if (Object.entries(categoriesFromFilter).length > 0) {
@@ -62,19 +68,28 @@ function ProductListPageComponent({ getProducts, categories }) {
   }, [categoriesFromFilter, categories]);
 
   useEffect(() => {
-    getProducts()
+    getProducts(categoryName, pageNumParam, searchQuery, filters, sortOption)
       .then((products) => {
         setProducts(products.products);
+        setPaginationLinksNumber(products.paginationLinksNumber);
+        setPageNum(products.pageNum);
         setLoading(false);
       })
       .catch((er) => {
         console.log(er);
         setError(true);
       });
-    console.log(filters);
-  }, [getProducts, filters]);
+  }, [
+    categoryName,
+    pageNumParam,
+    searchQuery,
+    filters,
+    sortOption,
+    getProducts,
+  ]);
 
   const handleFilters = () => {
+    navigate(location.pathname.replace(/\/[0-9]+$/, "")); 
     setShowResetFiltersButton(true);
     setFilters({
       price: price,
@@ -100,7 +115,7 @@ function ProductListPageComponent({ getProducts, categories }) {
         <Col md={3}>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <SortOptionsComponent />
+              <SortOptionsComponent setSortOption={setSortOption} />
             </ListGroup.Item>
             <ListGroup.Item className="mb-3 mt-3">
               FILTER: <br />
@@ -111,11 +126,13 @@ function ProductListPageComponent({ getProducts, categories }) {
                 setRatingsFromFilter={setRatingsFromFilter}
               />
             </ListGroup.Item>
-            <ListGroup.Item>
-              <CategoryFilterComponent
-                setCategoriesFromFilter={setCategoriesFromFilter}
-              />
-            </ListGroup.Item>
+            {!location.pathname.match(/\/category/) && (
+              <ListGroup.Item>
+                <CategoryFilterComponent
+                  setCategoriesFromFilter={setCategoriesFromFilter}
+                />
+              </ListGroup.Item>
+            )}
             <ListGroup.Item>
               <AttributesFilterComponent
                 attrsFilter={attrsFilter}
@@ -163,7 +180,14 @@ function ProductListPageComponent({ getProducts, categories }) {
         <Row>
           <Col md={3}></Col>
           <Col md={9}>
-            <PaginationComponent />
+            {paginationLinksNumber > 1 ? (
+              <PaginationComponent
+                categoryName={categoryName}
+                searchQuery={searchQuery}
+                paginationLinksNumber={paginationLinksNumber}
+                pageNum={pageNum}
+              />
+            ) : null}
           </Col>
         </Row>
       </Row>
