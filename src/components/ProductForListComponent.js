@@ -25,7 +25,10 @@ function ProductForListComponent({
       <Row>
         <Col lg={5}>
           {/* <Card.Img variant="top" src="/images/Carousel/nature-1.jpg" /> */}
+          <div className="product-card-image">
+
           <Card.Img variant="top" src={images[0] ? images[0].path : ""} />
+          </div>
         </Col>
 
         <Col lg={7}>
