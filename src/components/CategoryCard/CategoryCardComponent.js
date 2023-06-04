@@ -13,8 +13,8 @@ function CategoryCardComponent({ category, idx }) {
   //   backgroundColor: accentColor,
   // };
   const images = [
-    "/images/Carousel/moneh3.jpeg",
-    "/images/Carousel/Carousel-1.png",
+    "/images/Carousel/pexels-2.jpg",
+    "/images/Carousel/pexels-2.jpg",
     "/images/Carousel/pexels-2.jpg",
     "/images/Carousel/pexels-2.jpg",
     "/images/Carousel/pexels-2.jpg",

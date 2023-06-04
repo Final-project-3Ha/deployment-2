@@ -29,6 +29,8 @@ function EditProductPageComponent({
   updateProductApiRequest,
   reduxDispatch,
   saveAttributeToCatDoc,
+  imageDeleteHandler,
+  uploadHandler,
 }) {
   const [validated, setValidated] = useState(false);
   const [product, setProduct] = useState({});
@@ -41,6 +43,9 @@ function EditProductPageComponent({
   const [categoryChoosen, setCategoryChoosen] = useState("Choose category");
   const [newAttrKey, setNewAttrKey] = useState(false);
   const [newAttrValue, setNewAttrValue] = useState(false);
+  const [imageRemoved, setImageRemoved] = useState(false);
+  const [isUploading, setIsUploading] = useState("");
+  const [imageUploaded, setImageUploaded] = useState(false);
 
   const attrVal = useRef(null);
   const attrKey = useRef(null);
@@ -74,7 +79,7 @@ function EditProductPageComponent({
     fetchProduct(id)
       .then((product) => setProduct(product))
       .catch((er) => console.log(er));
-  }, [id]);
+  }, [id, imageRemoved, imageUploaded]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -396,19 +401,49 @@ function EditProductPageComponent({
               <Form.Label className="mb-3">Images</Form.Label>
               <Row>
                 {product.images &&
+                  product.images.length > 0 &&
                   product.images.map((image, idx) => (
                     <Col key={idx} style={{ position: "relative" }} xs={3}>
                       {" "}
-                      <Image
-                        crossOrigin="anonymous"
-                        src={image.path ?? null}
-                        fluid
-                      />{" "}
-                      <i style={onHover} className="bi bi-x"></i>
+                      {image.path && (
+                        <Image
+                          crossOrigin="anonymous"
+                          src={image.path ? image.path : null}
+                          fluid
+                        />
+                      )}
+                      <i
+                        style={onHover}
+                        onClick={() =>
+                          imageDeleteHandler(image.path, id).then((data) =>
+                            setImageRemoved(!imageRemoved)
+                          )
+                        }
+                        className="bi bi-x"
+                      ></i>
                     </Col>
                   ))}
               </Row>
-              <Form.Control className="mt-3" required type="file" multiple />
+              <Form.Control
+                type="file"
+                multiple
+                onChange={(e) => {
+                  setIsUploading("upload files in progress ...");
+                  uploadHandler(e.target.files, id)
+                    .then((data) => {
+                      setIsUploading("upload file completed");
+                      setImageUploaded(!imageUploaded);
+                    })
+                    .catch((er) =>
+                      setIsUploading(
+                        er.response.data.message
+                          ? er.response.data.message
+                          : er.response.data
+                      )
+                    );
+                }}
+              />
+              {isUploading}
             </Form.Group>
 
             <Button variant="primary" type="submit" className="me-1">
