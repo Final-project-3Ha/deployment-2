@@ -22,6 +22,8 @@ function ProductListPageComponent({ getProducts, categories }) {
   const [filters, setFilters] = useState({});
   const [price, setPrice] = useState(10);
   const [ratingsFromFilter,setRatingsFromFilter] = useState({})
+      const [categoriesFromFilter, setCategoriesFromFilter] = useState({});
+
   const { categoryName } = useParams() || "";
 
   useEffect(() => {
@@ -57,6 +59,7 @@ function ProductListPageComponent({ getProducts, categories }) {
     setFilters({
       price: price,
       rating: ratingsFromFilter,
+      category: categoriesFromFilter,
       attrs: attrsFromFilter,
     });
   };
@@ -89,7 +92,9 @@ function ProductListPageComponent({ getProducts, categories }) {
               />
             </ListGroup.Item>
             <ListGroup.Item>
-              <CategoryFilterComponent />
+              <CategoryFilterComponent
+                setCategoriesFromFilter={setCategoriesFromFilter}
+              />
             </ListGroup.Item>
             <ListGroup.Item>
               <AttributesFilterComponent
