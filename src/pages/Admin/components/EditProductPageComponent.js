@@ -79,7 +79,7 @@ function EditProductPageComponent({
     fetchProduct(id)
       .then((product) => setProduct(product))
       .catch((er) => console.log(er));
-  }, [id, imageRemoved, imageUploaded]);
+  }, [id, imageRemoved, imageUploaded, fetchProduct]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -131,7 +131,7 @@ function EditProductPageComponent({
     }
     setCategoryChoosen(product.category);
     setAttributesTable(product.attrs);
-  }, [product]);
+  }, [product, categories]);
 
   const changeCategory = (e) => {
     const highLevelCategory = e.target.value.split("/")[0];
@@ -436,14 +436,22 @@ function EditProductPageComponent({
                     })
                     .catch((er) =>
                       setIsUploading(
-                        er.response.data.message
-                          ? er.response.data.message
-                          : er.response.data
+                        er.response.data.message ? (
+                          <span>{er.response.data.message}</span>
+                        ) : (
+                          <span>{JSON.stringify(er.response.data)}</span>
+                        )
                       )
                     );
                 }}
               />
-              {isUploading}
+              {isUploading && (
+                <span>
+                  {isUploading.message
+                    ? isUploading.message
+                    : JSON.stringify(isUploading)}
+                </span>
+              )}{" "}
             </Form.Group>
 
             <Button variant="primary" type="submit" className="me-1">
@@ -453,7 +461,8 @@ function EditProductPageComponent({
               <Button variant="primary" type="submit">
                 Go Back
               </Button>
-              {updateProductResponseState.error ?? ""}{" "}
+              {updateProductResponseState.error &&
+                updateProductResponseState.error.message}
             </Link>
           </Form>
         </Col>
