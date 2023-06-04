@@ -74,7 +74,15 @@ function App() {
               path="/product-details/:id"
               element={<ProductDetailsPage />}
             />
-            <Route path="/product-list/category/:categoryName" element={<ProductListPage />} />
+            <Route
+              path="/product-list"
+              element={<ProductListPage />}
+            />
+
+            <Route
+              path="/product-list/category/:categoryName"
+              element={<ProductListPage />}
+            />
             <Route path="/cart" element={<CartPage />} />
             <Route path="*" element="Page not exists 404 " />
           </Route>
@@ -98,7 +106,10 @@ function App() {
 
           <Route element={<ProtectedRoutesComponent admin={true} />}>
             <Route path="/admin/users" element={<AdminUserPage />} />
-            <Route path="/admin/edit-user/:id" element={<AdminEditUserPages />} />
+            <Route
+              path="/admin/edit-user/:id"
+              element={<AdminEditUserPages />}
+            />
             <Route path="/admin/products" element={<AdminProductsPage />} />
             <Route
               path="/admin/create-new-product"

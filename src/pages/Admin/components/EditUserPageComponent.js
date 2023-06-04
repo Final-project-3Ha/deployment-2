@@ -55,7 +55,7 @@ function EditUserPageComponent({ updateUserApiRequest, fetchUser }) {
           er.response.data.message ? er.response.data.message : er.response.data
         )
       );
-  }, [id]);
+  }, [id, fetchUser]);
 
   return (
     <Container className="mt-5 mb-5">
