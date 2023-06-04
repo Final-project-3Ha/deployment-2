@@ -12,16 +12,7 @@ function CategoryCardComponent({ category, idx }) {
   // const accentButtonStyle = {
   //   backgroundColor: accentColor,
   // };
-  const images = [
-    "/images/Carousel/pexels-2.jpg",
-    "/images/Carousel/pexels-2.jpg",
-    "/images/Carousel/pexels-2.jpg",
-    "/images/Carousel/pexels-2.jpg",
-    "/images/Carousel/pexels-2.jpg",
-    "/images/Carousel/pexels-2.jpg",
-    "/images/Carousel/pexels-2.jpg",
-    "/images/Carousel/pexels-2.jpg",
-  ];
+  
   return (
     // <Card style={{ background: "#EAF2FF" }}>
     <Card style={{ backgroundColor: "#f3f5fa" }}>
@@ -29,20 +20,17 @@ function CategoryCardComponent({ category, idx }) {
         <Card.Img
           crossOrigin="anonymous"
           variant="top"
-          src={images[idx]}
+          src={category.image ?? null}
           width="100%"
           height="100%"
         />
       </div>
       <Card.Body>
-        <Card.Title>{category}</Card.Title>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
+        <Card.Title>{category.name}</Card.Title>
+        <Card.Text>{category.description}</Card.Text>
         {/* <LinkContainer to="product-list" style={accentButtonStyle}>
           <Button variant="primary" bg="#E48334" style={accentButtonStyle}> */}
-        <Link to="product-list">
+        <Link to={`/product-list/category/${category.name}`}>
           <Button variant="primary" className=" btn btn-category btn-block">
             Go to the Category
           </Button>

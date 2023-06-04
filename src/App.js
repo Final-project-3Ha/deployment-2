@@ -74,7 +74,7 @@ function App() {
               path="/product-details/:id"
               element={<ProductDetailsPage />}
             />
-            <Route path="/product-list" element={<ProductListPage />} />
+            <Route path="/product-list/category/:categoryName" element={<ProductListPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="*" element="Page not exists 404 " />
           </Route>

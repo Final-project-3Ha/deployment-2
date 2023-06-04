@@ -12,17 +12,25 @@ import { useEffect, useState } from "react";
 
 function ProductListPageComponent({ getProducts }) {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     getProducts()
-      .then((products) => setProducts(products.products))
-      .catch((er) => console.log(er));
-  }, []);
+      .then((products) => {
+        setProducts(products.products);
+        setLoading(false);
+      })
+      .catch((er) => {
+        console.log(er);
+        setError(true);
+      });
+  }, [getProducts]);
 
   return (
-    <Container fluid className="mt-5">
+    <Container fluid className="mt-5 mb-5">
       <Row>
-        <h1 className="m-3">Product List Page</h1>
+        <h1 className="mb-4">Product List Page</h1>
       </Row>
 
       <Row>
@@ -55,21 +63,27 @@ function ProductListPageComponent({ getProducts }) {
           </ListGroup>
         </Col>
         <Col md={9}>
-          {products.map((product) => (
-            <ProductForListComponent
-              className="d-flex justify-content-center"
-              key={product._id}
-              images={product.images}
-              name={product.name}
-              description={product.description}
-              price={product.price}
-              rating={product.rating}
-              reviewsNumber={product.reviewsNumber}
-              productId={product._id}
-            />
-          ))}
+          {loading ? (
+            <h1>Loading products...</h1>
+          ) : error ? (
+            <h1>Error while loading products. Try again later.</h1>
+          ) : (
+            products.map((product) => (
+              <ProductForListComponent
+                className="d-flex justify-content-center"
+                key={product._id}
+                images={product.images}
+                name={product.name}
+                description={product.description}
+                price={product.price}
+                rating={product.rating}
+                reviewsNumber={product.reviewsNumber}
+                productId={product._id}
+              />
+            ))
+          )}
         </Col>
-        <Row className="mb-4">
+        <Row >
           <Col md={3}></Col>
           <Col md={9}>
             <PaginationComponent />
