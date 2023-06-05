@@ -15,13 +15,16 @@ import "./header.css";
 import { LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
 import { logout } from "../../redux/actions/userAction";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getCategories } from "../../redux/actions/categoryActions";
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userRegisterLogin);
   const itemsCount = useSelector((state) => state.cart.itemsCount);
+  const { categories } = useSelector((state) => state.getCategories);
+    const [searchCategoryToggle, setSearchCategoryToggle] = useState("All");
+
   const primaryColor = "#f3f5fa";
   // const secondaryColor = "#458217";
   const accentColor = "#E48334";
@@ -32,9 +35,9 @@ const HeaderComponent = () => {
     backgroundColor: primaryColor,
   };
 
-   useEffect(() => {
-     dispatch(getCategories());
-   }, [dispatch]);
+  useEffect(() => {
+    dispatch(getCategories());
+  }, [dispatch]);
 
   return (
     <Navbar collapseOnSelect expand="lg" variant="dark" style={navbarStyle}>
@@ -67,12 +70,17 @@ const HeaderComponent = () => {
             <InputGroup>
               <DropdownButton
                 id="dropdown-basic-button"
-                title="All"
+                title={searchCategoryToggle}
                 style={accentButtonStyle}
               >
-                <Dropdown.Item>Olive oil</Dropdown.Item>
-                <Dropdown.Item>Zaatar</Dropdown.Item>
-                <Dropdown.Item>Honey</Dropdown.Item>
+                {categories.map((category, id) => (
+                  <Dropdown.Item
+                    key={id}
+                    onClick={() => setSearchCategoryToggle(category.name)}
+                  >
+                    {category.name}
+                  </Dropdown.Item>
+                ))}
               </DropdownButton>
               <Form.Control type="text" placeholder="Search in shop ..." />
               <Button style={accentButtonStyle}>
