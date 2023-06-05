@@ -41,7 +41,10 @@ function ProductListPageComponent({ getProducts, categories }) {
       if (categoryAllData) {
         let mainCategory = categoryAllData.name.split("/")[0];
         let index = categories.findIndex((item) => item.name === mainCategory);
-        setAttrsFilter(categories[index].attrs);
+        if (index >= 0) {
+          // Check if index is valid
+          setAttrsFilter(categories[index].attrs);
+        }
       }
     } else {
       setAttrsFilter([]);

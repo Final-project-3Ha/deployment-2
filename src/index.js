@@ -7,11 +7,13 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Provider } from "react-redux";
 import store from "./redux/store.js";
+import axios from "axios";
 
+axios.defaults.baseURL = "https://monueh-app-api.onrender.com";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <React.StrictMode>
+    <React.StrictMode>f
       <App />
     </React.StrictMode>
   </Provider>
