@@ -101,14 +101,15 @@ const [searchQuery, setSearchQuery] = useState();
                 title={searchCategoryToggle}
                 style={accentButtonStyle}
               >
-                {categories.map((category, id) => (
-                  <Dropdown.Item
-                    key={id}
-                    onClick={() => setSearchCategoryToggle(category.name)}
-                  >
-                    {category.name}
-                  </Dropdown.Item>
-                ))}
+                {Array.isArray(categories) &&
+                  categories.map((category, id) => (
+                    <Dropdown.Item
+                      key={id}
+                      onClick={() => setSearchCategoryToggle(category.name)}
+                    >
+                      {category.name}
+                    </Dropdown.Item>
+                  ))}
               </DropdownButton>
               <Form.Control
                 onKeyUp={submitHandler}
