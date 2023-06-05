@@ -4,15 +4,7 @@ import { Rating } from "react-simple-star-rating";
 // import {LinkContainer }from 'react-router-bootstrap'
 import { Link } from "react-router-dom";
 
-function ProductForListComponent({
-  productId,
-  name,
-  description,
-  price,
-  images,
-  rating,
-  reviewsNumber,
-}) {
+function ProductForListComponent({images,idx}) {
   return (
     <Card
       style={{
@@ -25,32 +17,29 @@ function ProductForListComponent({
       <Row>
         <Col lg={5}>
           {/* <Card.Img variant="top" src="/images/Carousel/nature-1.jpg" /> */}
-          <div className="product-card-image">
-
-          <Card.Img variant="top" src={images[0] ? images[0].path : ""} />
-          </div>
+          <Card.Img variant="top" src={images[idx]} />
         </Col>
 
         <Col lg={7}>
           <Card.Body style={{ margin: "auto" }}>
-            <Card.Title style={{ marginBottom: "20px" }}>{name}</Card.Title>
+            <Card.Title style={{ marginBottom: "20px" }}>
+              {" "}
+              Product Name Lorem ipsum dolor sit amet
+            </Card.Title>
 
             <Card.Text style={{ marginBottom: "20px" }}>
-              {description}
+              Product Description Lorem ipsum dolor sit amet consectetur
+              adipisicing elit.
+              <br /> Magni ipsa ducimus architecto explicabo id accusantium{" "}
+              <br /> nihil exercitationem autem porro esse.
             </Card.Text>
             <Card.Text style={{ marginBottom: "20px" }}>
-              <Rating readonly size={20} initialValue={rating} /> (
-              {reviewsNumber})
+              <Rating readonly size={20} initialValue={5} /> (1)
             </Card.Text>
             <Card.Text className="h4" style={{ marginBottom: "20px" }}>
-              ${price}
-            </Card.Text>
-
-            <Card.Text className="h4" style={{ marginBottom: "20px" }}>
-              <Link to={`/product-details/${productId}`}>
-                <Button variant="primary" type="true">
-                  See Product
-                </Button>
+              10${" "}
+              <Link to="/product-details">
+                <Button variant="primary">See Product</Button>
               </Link>
             </Card.Text>
           </Card.Body>

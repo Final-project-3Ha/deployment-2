@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import React, { useState } from "react";
 import "./App.css";
 
 // Public Pages
@@ -47,7 +46,7 @@ import RoutesWithUserChatComponent from "./components/user/RoutesWithUserChatCom
 
 function App() {
   // const [loggedIn, setLoggedIn] = useState(true);
-  // const [admin, setdmin] = useState(true);
+  // const [isAdmin, setIsAdmin] = useState(true);
   // const [isUser, setIsUser] = useState(true);
   // const handleLoggedIn = () => {
   //   localStorage.getItem("userInfo") ? setLoggedIn(true) : setLoggedIn(false);
@@ -69,41 +68,12 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-
+            <Route path="/product-details" element={<ProductDetailsPage />} />
             <Route
               path="/product-details/:id"
               element={<ProductDetailsPage />}
             />
             <Route path="/product-list" element={<ProductListPage />} />
-            <Route
-              path="/product-list/:pageNumParam"
-              element={<ProductListPage />}
-            />
-            <Route
-              path="/product-list/category/:categoryName/:pageNumParam"
-              element={<ProductListPage />}
-            />
-            <Route
-              path="/product-list/search/:searchQuery"
-              element={<ProductListPage />}
-            />
-            <Route
-              path="/product-list/search/:searchQuery/:pageNumParam"
-              element={<ProductListPage />}
-            />
-            <Route
-              path="/product-list/category/:categoryName/search/:searchQuery"
-              element={<ProductListPage />}
-            />
-            <Route
-              path="/product-list/category/:categoryName/search/:searchQuery/:pageNumParam"
-              element={<ProductListPage />}
-            />
-
-            <Route
-              path="/product-list/category/:categoryName"
-              element={<ProductListPage />}
-            />
             <Route path="/cart" element={<CartPage />} />
             <Route path="*" element="Page not exists 404 " />
           </Route>
@@ -118,26 +88,25 @@ function App() {
               element={<UserCartDetailsPage />}
             />
             <Route
-              path="/user/order-details/:id"
+              path="/user/order-details"
               element={<UserOrderDetailsPage />}
             />
           </Route>
 
           {/* Admin Protected Routes */}
 
-          <Route element={<ProtectedRoutesComponent admin={true} />}>
+          <Route
+            element={<ProtectedRoutesComponent admin={true} />}
+          >
             <Route path="/admin/users" element={<AdminUserPage />} />
-            <Route
-              path="/admin/edit-user/:id"
-              element={<AdminEditUserPages />}
-            />
+            <Route path="/admin/edit-user" element={<AdminEditUserPages />} />
             <Route path="/admin/products" element={<AdminProductsPage />} />
             <Route
               path="/admin/create-new-product"
               element={<AdminCreateProductPage />}
             />
             <Route
-              path="/admin/edit-product/:id"
+              path="/admin/edit-product"
               element={<AdminEditProductPage />}
             />
             <Route path="/admin/orders" element={<AdminOrdersPage />} />

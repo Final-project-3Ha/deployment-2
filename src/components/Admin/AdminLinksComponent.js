@@ -2,15 +2,15 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Nav, Navbar } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-// import { useNavigate } from "react-router-dom";
-import { logout } from "../../redux/actions/userAction.js";
+import { useNavigate } from "react-router-dom";
+
 function AdminLinksComponent() {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  // const handleLogout = () => {
-  //   dispatch({ type: "LOGOUT_USER" });
-  //   navigate("/");
-  // };
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT_USER" });
+    navigate("/");
+  };
   return (
     <Navbar bg="light" variant="light">
       <Nav defaultActiveKey="/home" className="flex-column">
@@ -34,9 +34,7 @@ function AdminLinksComponent() {
           <Nav.Link>Analytics</Nav.Link>
         </LinkContainer>
 
-        {/* <Nav.Link onClick={handleLogout}>Logout</Nav.Link> */}
-
-        <Nav.Link onClick={() => dispatch(logout())}>Logout</Nav.Link>
+        <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
       </Nav>
     </Navbar>
   );

@@ -3,8 +3,6 @@
   --secondaryColor: #458217;
   --accentColor: #f7892d;
   --accentColorHover: #f7882dd5;
-  --bootStrapColor: #f3f5fa;
-
 }
 
 
@@ -40,17 +38,10 @@
   /* color: <your-hover-text-color>; */
 }
 
-/* .dropdown-item.active, .dropdown-item:active {
+.dropdown-item.active, .dropdown-item:active {
     color: var(--bs-dropdown-link-active-color);
     text-decoration: none;
     background-color:var(--accentColor) !important;
-} */
-
-.dropdown-item.active,
-.dropdown-item:active {
-  color: var(--bs-dropdown-link-active-color);
-  text-decoration: none;
-  background-color: var(--bootStrapColor) !important;
 }
 
 .btn-primary {

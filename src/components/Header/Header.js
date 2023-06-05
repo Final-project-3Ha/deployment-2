@@ -1,4 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+import React , { useState , useEffect} from "react";
+import { useDispatch } from "react-redux";
 import {
   Navbar,
   Nav,
@@ -13,21 +14,16 @@ import {
 } from "react-bootstrap";
 import "./header.css";
 import { LinkContainer } from "react-router-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { logout } from "../../redux/actions/userAction";
-import { useEffect, useState } from "react";
-import { getCategories } from "../../redux/actions/categoryActions";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state) => state.userRegisterLogin);
-  const itemsCount = useSelector((state) => state.cart.itemsCount);
-  const { categories } = useSelector((state) => state.getCategories);
-  const [searchCategoryToggle, setSearchCategoryToggle] = useState("All");
-const [searchQuery, setSearchQuery] = useState();
-
   const primaryColor = "#f3f5fa";
   // const secondaryColor = "#458217";
+  const navigate = useNavigate();
   const accentColor = "#E48334";
   const accentButtonStyle = {
     backgroundColor: accentColor,
@@ -35,38 +31,14 @@ const [searchQuery, setSearchQuery] = useState();
   const navbarStyle = {
     backgroundColor: primaryColor,
   };
-
- const navigate = useNavigate();
-
-
-  useEffect(() => {
-    dispatch(getCategories());
-  }, [dispatch]);
-
-  const submitHandler = (e) => {
-    if (e.keyCode && e.keyCode !== 13) return;
-    e.preventDefault();
-   if (searchQuery && searchQuery.trim()) {
-     if (searchCategoryToggle === "All") {
-       navigate(`/product-list/search/${searchQuery}`);
-     } else {
-       navigate(
-         `/product-list/category/${searchCategoryToggle.replaceAll(
-           "/",
-           ","
-         )}/search/${searchQuery}`
-       );
-     }
-   } else if (searchCategoryToggle !== "All") {
-     navigate(
-       `/product-list/category/${searchCategoryToggle.replaceAll("/", ",")}`
-     );
-   } else {
-     navigate("/product-list");
-   }
-  }
-
-
+  const handelLogoutButton = () => {
+    dispatch({ type: "LOGOUT_USER" });
+    navigate("/login");
+  };
+  const [isAdmin , setIsAdmin] = useState(false);
+useEffect(() => {
+// console.log(JSON.parse(localStorage.getItem("userInfo")));
+} , [])
   return (
     <Navbar collapseOnSelect expand="lg" variant="dark" style={navbarStyle}>
       <Container>
@@ -82,7 +54,7 @@ const [searchQuery, setSearchQuery] = useState();
           <Navbar.Brand href="/">
             {" "}
             <img
-              src="/Monueh-Hssn.svg"
+              src="/images/Carousel/Monueh-Hssn.svg"
               alt="Monueh Logo"
               height="100"
               width="100"
@@ -98,73 +70,53 @@ const [searchQuery, setSearchQuery] = useState();
             <InputGroup>
               <DropdownButton
                 id="dropdown-basic-button"
-                title={searchCategoryToggle}
+                title="All"
                 style={accentButtonStyle}
               >
-                {Array.isArray(categories) &&
-                  categories.map((category, id) => (
-                    <Dropdown.Item
-                      key={id}
-                      onClick={() => setSearchCategoryToggle(category.name)}
-                    >
-                      {category.name}
-                    </Dropdown.Item>
-                  ))}
+                <Dropdown.Item>Olive oil</Dropdown.Item>
+                <Dropdown.Item>Zaatar</Dropdown.Item>
+                <Dropdown.Item>Honey</Dropdown.Item>
               </DropdownButton>
-              <Form.Control
-                onKeyUp={submitHandler}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                type="text"
-                placeholder="Search in shop ..."
-              />
-
-              <Button onClick={submitHandler} style={accentButtonStyle}>
+              <Form.Control type="text" placeholder="Search in shop ..." />
+              <Button style={accentButtonStyle}>
                 <i className="bi bi-search text-white"></i>
               </Button>
             </InputGroup>
           </Nav>
           <Nav className="ms-auto">
-            {userInfo && userInfo.isAdmin ? (
-              <LinkContainer to="/admin/orders">
-                <Nav.Link>Dashboard</Nav.Link>
-              </LinkContainer>
-            ) : userInfo && userInfo.name && !userInfo.isAdmin ? (
-              <NavDropdown
-                title={`${userInfo.name} ${userInfo.lastName}`}
-                id="collasible-nav-dropdown"
-              >
-                <NavDropdown.Item eventKey="/user" as={Link} to="/user">
-                  My profile
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  eventKey="/user/my-orders"
-                  as={Link}
-                  to="/user/my-orders"
-                >
-                  My orders
-                </NavDropdown.Item>
+           {isAdmin &&<LinkContainer to="/admin/orders">
+              <Nav.Link>Dashboard</Nav.Link>
+            </LinkContainer> } 
 
-                <NavDropdown.Item onClick={() => dispatch(logout())}>
-                  Logout
-                </NavDropdown.Item>
-              </NavDropdown>
-            ) : (
-              <>
-                {/* <LinkContainer to="/product-list">
-                  <Nav.Link>Products</Nav.Link>
-                </LinkContainer> */}
-                <LinkContainer to="/login">
-                  <Nav.Link>Login</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/register">
-                  <Nav.Link>Register</Nav.Link>
-                </LinkContainer>
-              </>
-            )}
+            <NavDropdown title="Hassan HA" id="collasible-nav-dropdown">
+              <NavDropdown.Item eventKey="/user" as={Link} to="/user">
+                My profile
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                eventKey="/user/my-orders"
+                as={Link}
+                to="/user/my-orders"
+              >
+                My orders
+              </NavDropdown.Item>
+
+              <NavDropdown.Item onClick={handelLogoutButton}>
+                Logout
+              </NavDropdown.Item>
+            </NavDropdown>
+            <LinkContainer to="/product-list">
+              <Nav.Link>Products</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/login">
+              <Nav.Link>Login</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/register">
+              <Nav.Link>Register</Nav.Link>
+            </LinkContainer>
             <LinkContainer to="/cart">
               <Nav.Link style={accentButtonStyle}>
                 <Badge pill bg="#E48334" style={accentButtonStyle}>
-                  {itemsCount === 0 ? "" : itemsCount}
+                  2
                 </Badge>
                 <i className="bi bi-cart-dash"></i>
                 <span className="ms-1">CART</span>

@@ -1,71 +1,69 @@
 import React from "react";
-import ProductListPageComponent from "../components/ProductListPageComponent.js";
+import "./ProductListPage.css";
+import { Row, Col, Container, ListGroup, Button } from "react-bootstrap";
+import PaginationComponent from "../../components/PaginationComponent.js";
+import ProductForListComponent from "../../components/ProductForListComponent.js";
+import SortOptionsComponent from "../../components/SortOptionComponent.js";
+import PriceFilterComponent from "../../components/filterQueryResultOptions/PriceFilterComponent.js";
+import RatingFilterComponent from "../../components/filterQueryResultOptions/RatingFilterComponent.js";
+import CategoryFilterComponent from "../../components/filterQueryResultOptions/CategoryFilterComponent.js";
+import AttributesFilterComponent from "../../components/filterQueryResultOptions/AttributesFilterComponent.js";
 import axios from "axios";
-import { useSelector } from "react-redux";
-
-let filtersUrl = "";
-
-
-const proceedFilters = (filters) => {
-  filtersUrl = "";
-  Object.keys(filters).map((key, index) => {
-    if (key === "price") filtersUrl += `&price=${filters[key]}`;
-    else if (key === "rating") {
-      let rat = "";
-      Object.keys(filters[key]).map((key2, index2) => {
-        if (filters[key][key2]) rat += `${key2},`;
-        return "";
-      });
-      filtersUrl += "&rating=" + rat;
-    } else if (key === "category") {
-      let cat = "";
-      Object.keys(filters[key]).map((key3, index3) => {
-        if (filters[key][key3]) cat += `${key3},`;
-        return "";
-      });
-      filtersUrl += "&category=" + cat;
-    } else if (key === "attrs") {
-      if (filters[key].length > 0) {
-        let val = filters[key].reduce((acc, item) => {
-          let key = item.key;
-          let val = item.values.join("-");
-          return acc + key + "-" + val + ",";
-        }, "");
-        filtersUrl += "&attrs=" + val;
-      }
-    }
-    return "";
-  });
-  return filtersUrl;
-};
-
-
-const getProducts = async (
-  categoryName = "",
-  pageNumParam = null,
-  searchQuery = "",
-  filters = {},
-  sortOption = ""
-) => {
-  //   filtersUrl = "&price=60&rating=1,2,3&category=a,b,c,d&attrs=color-red-blue,size-1TB-2TB";
-  filtersUrl = "";
-  console.log(filters);
-  const search = searchQuery ? `search/${searchQuery}/` : "";
-  const category = categoryName ? `category/${categoryName}/` : "";
-  const url = `/api/products/${category}${search}?pageNum=${pageNumParam}${filtersUrl}&sort=${sortOption}`;
-  const { data } = await axios.get(url);
-  return data;
-}
 
 function ProductListPage() {
-
-    const { categories } = useSelector((state) => state.getCategories);
+  axios.get("/api/products").then((res) => console.log(res));
 
   return (
-    <ProductListPageComponent
-      getProducts={getProducts}
-      categories={categories}
-    />
+    <Container fluid className="mt-5">
+      <Row>
+        <Col md={3}>
+          <ListGroup variant="flush">
+            <ListGroup.Item>
+              <SortOptionsComponent />
+            </ListGroup.Item>
+            <ListGroup.Item className="mb-3 mt-3">
+              FILTER: <br />
+              <PriceFilterComponent />
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <RatingFilterComponent />
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <CategoryFilterComponent />
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <AttributesFilterComponent />
+            </ListGroup.Item>
+            <ListGroup.Item className="mt-2 ">
+              <Button className="me-1 " variant="primary" id="filter">
+                Filter
+              </Button>
+              <Button variant="danger" id="reset">
+                Reset filters
+              </Button>
+            </ListGroup.Item>
+          </ListGroup>
+        </Col>
+        <Col md={9}>
+          {Array.from({ length: 2 }).map((_, idx) => (
+            <ProductForListComponent
+              key={idx}
+              images={[
+                "/images/Carousel/pexels-2.jpg",
+                "/images/Carousel/pexels-2.jpg",
+              ]}
+              idx={idx}
+            />
+          ))}
+        </Col>
+        <Row className="mb-4">
+          <Col md={3}></Col>
+          <Col md={9} >
+            <PaginationComponent  />
+          </Col>
+        </Row>
+      </Row>
+    </Container>
   );
 }
 

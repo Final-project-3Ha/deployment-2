@@ -1,25 +1,17 @@
 import React from "react";
 import { ListGroup, Row, Col, Image, Form, Button } from "react-bootstrap";
-import RemoveFromCartComponent from "../RemoveFromCartComponent/RemoveFromCartComponent.js";
 
-function CartItemComponent({
-  item,
-  removeFromCartHandler = false,
-  orderCreated = false,
-  changeCount = false,
-}) {
+function CartItemComponent({ item, orderCreated = false }) {
   return (
     <>
       <ListGroup.Item>
         <Row>
           <Col md={2}>
-            <div className="category-card-image">
-              <Image
-                crossOrigin="anonymous"
-                src={item.image ? item.image.path ?? null : null}
-                fluid
-              />
-            </div>
+            <Image
+              crossOrigin="anonymous"
+              src={item.image ? item.image.path ?? null : null}
+              fluid
+            />
           </Col>
           <Col md={2}>{item.name}</Col>
           <Col md={2}>
@@ -27,11 +19,7 @@ function CartItemComponent({
           </Col>
           <Col md={3}>
             <Form.Select
-              onChange={
-                changeCount
-                  ? (e) => changeCount(item.productID, e.target.value)
-                  : undefined
-              }
+              onChange={() => {}}
               disabled={orderCreated}
               value={item.quantity}
             >
@@ -43,16 +31,13 @@ function CartItemComponent({
             </Form.Select>
           </Col>
           <Col md={3}>
-            
-            <RemoveFromCartComponent
-              orderCreated={orderCreated}
-              productID={item.productID}
-              quantity={item.quantity}
-              price={item.price}
-              removeFromCartHandler={
-                removeFromCartHandler ? removeFromCartHandler : undefined
-              }
-            />
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => window.confirm("Are you sure?")}
+            >
+              <i className="bi bi-trash"></i>
+            </Button>
           </Col>
         </Row>
       </ListGroup.Item>

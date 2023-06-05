@@ -1,3 +1,11 @@
+:root {
+  --primaryColor: #ffffff;
+  --secondaryColor: #458217;
+  --secondaryColorAlert: #458217d5;
+  --accentColor: #f7892d;
+  --accentColorHover: #f7882dd5;
+}
+
 body {
   font-family: "Rubik", sans-serif !important;
   margin-bottom: 170px;
@@ -11,16 +19,15 @@ body {
   --secondaryColorAlert: #458217d5;
 
   --accentColor: #f7892d;
-
+  
   --accentColorHover: #f7882dd5;
-
-  --bootStrapColor: #f3f5fa;
 }
 
 .alert-primary {
   background-color: var(--secondaryColorAlert) !important;
   color: var(--primaryColor) !important;
   border: 0 !important;
+
 }
 
 .alert-info {
@@ -46,7 +53,7 @@ body {
 }
 
 a {
-  color: var(--secondaryColor) !important;
+  color:var(--secondaryColor)!important;
   text-decoration: none !important;
 }
 
@@ -55,7 +62,7 @@ a:hover {
 }
 
 .text-danger {
-  color: var(--accentColor) !important;
+   color: var(--accentColor) !important;
 }
 
 .text-danger {
@@ -63,10 +70,12 @@ a:hover {
   color: rgba(var(--accentColor), var(--accentColor)) !important;
 }
 
-.btn-secondary {
-  background-color: var(--accentColor) !important;
+
+.btn-secondary{
+   background-color: var(--accentColor) !important;
   color: var(--primaryColor) !important;
   border: 0 !important;
+
 }
 
 .form-control:focus {
@@ -75,7 +84,8 @@ a:hover {
 }
 
 .rounded-pill {
-  background-color: var(--accentColor) !important;
+   background-color: var(--accentColor) !important;
+
 }
 
 .form-select:focus {
@@ -89,8 +99,7 @@ a:hover {
   border-color: var(--accentColor) !important;
 }
 
-.was-validated .form-check-input:valid,
-.form-check-input.is-valid {
+.was-validated .form-check-input:valid, .form-check-input.is-valid {
   border-color: var(--accentColor) !important;
 }
 
@@ -100,33 +109,12 @@ a:hover {
 
 .form-check-input {
   --bs-form-check-bg: var(--bs-body-bg);
-
+  
   /* border: var(--accentColor) solid var(--accentColor)!important;  */
 }
 
-.was-validated .form-check-input:valid ~ .form-check-label,
-.form-check-input.is-valid ~ .form-check-label {
+
+.was-validated .form-check-input:valid ~ .form-check-label, .form-check-input.is-valid ~ .form-check-label {
   color: black !important;
 }
 
-/* .dropdown-item.active,
-.dropdown-item:active {
-  color: var(--bs-dropdown-link-active-color);
-  text-decoration: none;
-  background-color: var(--bootStrapColor) !important;
-} */
-
-.hover-row:hover {
-  background-color: var(--bootStrapColor);
-  cursor: pointer;
-}
-
-.page-link.active, .active > .page-link {
-  z-index: 1 !important;
-  /* color: var(--bs-pagination-active-color); */
-  background-color: var(--bootStrapColor)!important;
-
-  border-color: var(--bootStrapColor)!important;
-
-  color: var(--accentColor) !important;
-}

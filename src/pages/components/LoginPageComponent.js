@@ -45,18 +45,16 @@ function LoginPageComponent({
             //   navigate("/user", { replace: true });
             // else navigate("/admin/orders", { replace: true });
 
-            window.location.href = "/";
+            window.location.href = "/user";
           else window.location.href = "/admin/orders";
         })
-        .catch((er) => {
-          const errorMessage =
-            er.response?.data?.message ||
-            er.response?.data ||
-            "An error occurred.";
+        .catch((er) =>
           setLoginUserResponseState({
-            error: errorMessage,
-          });
-        });
+            error: er.response.data.message
+              ? er.response.data.message
+              : er.response.data,
+          })
+        );
     }
 
     setValidated(true);
@@ -110,7 +108,7 @@ function LoginPageComponent({
                   as="span"
                   animation="border"
                   size="sm"
-                  // role="status"
+                  role="status"
                   aria-hidden="true"
                   className="me-1"
                 />
