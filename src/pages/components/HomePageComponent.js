@@ -4,20 +4,28 @@ import ProductCarouselComponent from "../../components/productCarousel/ProductCa
 import CategoryCardComponent from "../../components/CategoryCard/CategoryCardComponent.js";
 import { useEffect, useState } from "react";
 
-function HomePageComponent({categories}) {
+function HomePageComponent({ categories, getBestsellers }) {
+  const [mainCategories, setMainCategories] = useState([]);
+    const [bestSellers, setBestsellers] = useState([]);
 
-     const [mainCategories, setMainCategories] = useState([]);
-
-      useEffect(() => {
-        setMainCategories((cat) =>
-          categories.filter((item) => !item.name.includes("/"))
-        );
-      }, [categories]);
-
+  useEffect(() => {
+    getBestsellers()
+      .then((data) => {
+        setBestsellers(data);
+      })
+      .catch((er) =>
+        console.log(
+          er.response.data.message ? er.response.data.message : er.response.data
+        )
+      );
+    setMainCategories((cat) =>
+      categories.filter((item) => !item.name.includes("/"))
+    );
+  }, [categories, getBestsellers]);
 
   return (
     <>
-      <ProductCarouselComponent />
+      <ProductCarouselComponent bestSellers={bestSellers} />
       <Container>
         <h2 className="mt-4 mb-4 ">Categories</h2>
         <Row xs={1} md={2} className="g-5 mb-5">

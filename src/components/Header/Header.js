@@ -13,7 +13,7 @@ import {
 } from "react-bootstrap";
 import "./header.css";
 import { LinkContainer } from "react-router-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../redux/actions/userAction";
 import { useEffect, useState } from "react";
 import { getCategories } from "../../redux/actions/categoryActions";
@@ -23,7 +23,8 @@ const HeaderComponent = () => {
   const { userInfo } = useSelector((state) => state.userRegisterLogin);
   const itemsCount = useSelector((state) => state.cart.itemsCount);
   const { categories } = useSelector((state) => state.getCategories);
-    const [searchCategoryToggle, setSearchCategoryToggle] = useState("All");
+  const [searchCategoryToggle, setSearchCategoryToggle] = useState("All");
+const [searchQuery, setSearchQuery] = useState();
 
   const primaryColor = "#f3f5fa";
   // const secondaryColor = "#458217";
@@ -35,9 +36,36 @@ const HeaderComponent = () => {
     backgroundColor: primaryColor,
   };
 
+ const navigate = useNavigate();
+
+
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
+
+  const submitHandler = (e) => {
+    if (e.keyCode && e.keyCode !== 13) return;
+    e.preventDefault();
+   if (searchQuery && searchQuery.trim()) {
+     if (searchCategoryToggle === "All") {
+       navigate(`/product-list/search/${searchQuery}`);
+     } else {
+       navigate(
+         `/product-list/category/${searchCategoryToggle.replaceAll(
+           "/",
+           ","
+         )}/search/${searchQuery}`
+       );
+     }
+   } else if (searchCategoryToggle !== "All") {
+     navigate(
+       `/product-list/category/${searchCategoryToggle.replaceAll("/", ",")}`
+     );
+   } else {
+     navigate("/product-list");
+   }
+  }
+
 
   return (
     <Navbar collapseOnSelect expand="lg" variant="dark" style={navbarStyle}>
@@ -82,8 +110,14 @@ const HeaderComponent = () => {
                   </Dropdown.Item>
                 ))}
               </DropdownButton>
-              <Form.Control type="text" placeholder="Search in shop ..." />
-              <Button style={accentButtonStyle}>
+              <Form.Control
+                onKeyUp={submitHandler}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                type="text"
+                placeholder="Search in shop ..."
+              />
+
+              <Button onClick={submitHandler} style={accentButtonStyle}>
                 <i className="bi bi-search text-white"></i>
               </Button>
             </InputGroup>
