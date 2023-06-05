@@ -18,10 +18,13 @@ function HomePageComponent({ categories, getBestsellers }) {
           er.response.data.message ? er.response.data.message : er.response.data
         )
       );
-    setMainCategories((cat) =>
-      categories.filter((item) => !item.name.includes("/"))
-    );
+    if (Array.isArray(categories)) {
+      setMainCategories((cat) =>
+        categories.filter((item) => !item.name.includes("/"))
+      );
+    }
   }, [categories, getBestsellers]);
+
 
   return (
     <>
